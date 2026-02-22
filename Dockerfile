@@ -4,7 +4,7 @@ FROM python:3.12-slim
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies including Qt5 plugins
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     libgl1 \
@@ -13,6 +13,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxext6 \
     libxrender1 \
     libfontconfig1 \
+    libqt5core5a \
+    libqt5gui5 \
+    libqt5widgets5 \
+    libqt5dbus5 \
+    libqt5network5 \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user
@@ -29,6 +34,7 @@ COPY AiNiee.py .
 COPY ModuleFolders ./ModuleFolders
 COPY PluginScripts ./PluginScripts
 COPY Resource ./Resource
+COPY StevExtraction ./StevExtraction
 COPY UserInterface ./UserInterface
 
 # Change ownership to non-root user
@@ -51,6 +57,11 @@ USER appuser
 # Working directory
 WORKDIR /app
 
-# Enable HTTP service by modifying the config at runtime
-# Run the app with Python (headless mode with HTTP API)
-CMD ["python", "AiNiee.py"]
+# Expose HTTP service port
+EXPOSE 3388
+
+# Copy entrypoint script (before USER instruction so we can chmod)
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
+
+# Run the app with the entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
