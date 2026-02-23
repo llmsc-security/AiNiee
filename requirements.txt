@@ -38,6 +38,7 @@ sudachipy
 sudachidict-core
 
 # mediapipe
+mediapipe>=0.10.0
 absl-py
 attrs>=19.1.0
 flatbuffers>=2.0
@@ -45,7 +46,8 @@ matplotlib
 sounddevice>=0.4.4
 
 # BabelDOC
-# onnx 新版本打包后不能运行，这里使用 onnx==1.16.1 onnxruntime==1.20.1
+babeldoc>=0.1.0
+# onnx 新版本打包后不能运行，这里使用 onnx==1.17.0 onnxruntime==1.20.1
 # rapidocr-onnxruntime 依赖了 opencv-python，所以去除了 opencv-python-headless
 # 不使用 babeldoc.document_il.midend.detect_scanned_file.DetectScannedFile 所以去除 scikit-image>=0.25.2
 bitstring>=4.3.0
@@ -53,7 +55,7 @@ configargparse>=1.7
 httpx[socks]>=0.27.0
 huggingface-hub>=0.27.0
 numpy>=2.0.2
-onnx==1.16.1
+onnx>=1.17.0
 onnxruntime==1.20.1
 openai>=1.59.3
 orjson>=3.10.14
